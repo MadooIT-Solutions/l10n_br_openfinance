@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="ir_cron_sync_bank_statements" model="ir.cron">
+            <field name="name">Sincronizar Extratos Bancários Open Finance</field>
+            <field name="active">True</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall">False</field>
+            <field name="model_id" ref="model_account_bank_statement"/>
+            <field name="function">fetch_bank_statements</field>
+            <field name="args">()</field>
+        </record>
+    </data>
+</odoo>
