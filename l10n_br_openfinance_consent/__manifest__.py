@@ -11,7 +11,6 @@ Suporte a pessoa física (PF) e jurídica (PJ), autorização via QR Code e reno
     'website': 'https://www.madooit.com.br',
     'depends': [
         'l10n_br_openfinance',
-        'l10n_br_openfinance_account',
     ],
     'data': [
         'security/ir.model.access.csv',
