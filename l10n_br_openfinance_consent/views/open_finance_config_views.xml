@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_open_finance_config_form_inherit_consent" model="ir.ui.view">
+        <field name="name">open.finance.config.form.inherit.consent</field>
+        <field name="model">open.finance.config</field>
+        <field name="inherit_id" ref="l10n_br_openfinance.view_open_finance_config_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_open_consents" string="Consentimentos" type="object"
+                    class="btn-secondary"
+                    invisible="active_consent_count == 0"
+                    position="after"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_open_consents" type="object" class="oe_stat_button"
+                    icon="fa-lock">
+                    <span>Consentimentos</span>
+                </button>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Consentimentos">
+                    <field name="consent_ids">
+                        <list limit="15">
+                            <field name="display_name"/>
+                            <field name="scope"/>
+                            <field name="status" widget="badge"
+                                decoration-success="status in ('authorized','active')"
+                                decoration-danger="status in ('expired','revoked','rejected')"
+                                decoration-warning="status in ('draft','requested')"/>
+                            <field name="date_expiration"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_open_finance_config_tree_inherit_consent" model="ir.ui.view">
+        <field name="name">open.finance.config.tree.inherit.consent</field>
+        <field name="model">open.finance.config</field>
+        <field name="inherit_id" ref="l10n_br_openfinance.view_open_finance_config_tree"/>
+        <field name="arch" type="xml">
+            <field name="certificate_id" position="before">
+                <field name="active_consent_count" string="Consentimentos"/>
+            </field>
+        </field>
+    </record>
+</odoo>

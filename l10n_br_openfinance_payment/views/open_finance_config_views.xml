@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_open_finance_config_form_inherit_payment" model="ir.ui.view">
+        <field name="name">open.finance.config.form.inherit.payment</field>
+        <field name="model">open.finance.config</field>
+        <field name="inherit_id" ref="l10n_br_openfinance.view_open_finance_config_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_open_pix" type="object" class="oe_stat_button"
+                    icon="fa-bolt">
+                    <span>Pix</span>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

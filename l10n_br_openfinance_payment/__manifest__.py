@@ -18,6 +18,7 @@ Suporte a Pix e boletos de cobrança com registro, consulta e conciliação cont
         'data/ir_cron_data.xml',
         'views/open_finance_pix_views.xml',
         'views/open_finance_boleto_views.xml',
+        'views/open_finance_config_views.xml',
     ],
     'installable': True,
     'application': False,

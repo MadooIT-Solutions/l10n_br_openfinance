@@ -46,23 +46,6 @@ class OpenFinanceConfig(models.Model):
         string='URL do Token',
         help='URL para obtenção do token OAuth2')
 
-    consent_ids = fields.One2many(
-        'open.finance.consent', 'config_id',
-        string='Consentimentos')
-    statement_ids = fields.One2many(
-        'open.finance.statement', 'config_id',
-        string='Extratos Importados')
-    pix_ids = fields.One2many(
-        'open.finance.pix', 'config_id',
-        string='Transações Pix')
-
-    active_consent_count = fields.Integer(
-        compute='_compute_counters', string='Consentimentos Ativos')
-    total_statements = fields.Integer(
-        compute='_compute_counters', string='Total Extratos')
-    total_pix = fields.Integer(
-        compute='_compute_counters', string='Total Pix')
-
     color = fields.Integer(string='Color Index')
 
     @api.depends('institution_name', 'environment')
@@ -71,47 +54,11 @@ class OpenFinanceConfig(models.Model):
             env_label = dict(r._fields['environment'].selection).get(r.environment, r.environment)
             r.display_name = f'{r.institution_name} [{env_label}]'
 
-    def _compute_counters(self):
-        for r in self:
-            r.active_consent_count = len(r.consent_ids.filtered(lambda c: c.status == 'authorized'))
-            r.total_statements = len(r.statement_ids)
-            r.total_pix = len(r.pix_ids)
-
     @api.constrains('api_base_url')
     def _check_api_url(self):
         for r in self:
             if r.api_base_url and not r.api_base_url.startswith('https://'):
                 raise ValidationError(_('A URL base da API deve usar HTTPS.'))
-
-    def action_open_consents(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': _('Consentimentos'),
-            'res_model': 'open.finance.consent',
-            'domain': [('config_id', '=', self.id)],
-            'context': {'default_config_id': self.id},
-            'view_mode': 'list,form',
-        }
-
-    def action_open_statements(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': _('Extratos'),
-            'res_model': 'open.finance.statement',
-            'domain': [('config_id', '=', self.id)],
-            'context': {'default_config_id': self.id},
-            'view_mode': 'list,form',
-        }
-
-    def action_open_pix(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': _('Transações Pix'),
-            'res_model': 'open.finance.pix',
-            'domain': [('config_id', '=', self.id)],
-            'context': {'default_config_id': self.id},
-            'view_mode': 'list,form',
-        }
 
     def test_connection(self):
         self.ensure_one()
