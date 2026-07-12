@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_open_finance_statement_tree" model="ir.ui.view">
+        <field name="name">open.finance.statement.tree</field>
+        <field name="model">open.finance.statement</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state=='imported'"
+                  decoration-danger="state=='error'"
+                  decoration-warning="state in ('draft','fetching')">
+                <field name="display_name" invisible="1"/>
+                <field name="config_id"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="state" widget="badge"/>
+                <field name="total_transactions" sum="Total"/>
+                <field name="total_debit" sum="Total" widget="monetary"/>
+                <field name="total_credit" sum="Total" widget="monetary"/>
+                <field name="create_date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_open_finance_statement_form" model="ir.ui.view">
+        <field name="name">open.finance.statement.form</field>
+        <field name="model">open.finance.statement</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_fetch_statement" string="Buscar Extrato" type="object"
+                        class="btn-primary"
+                        invisible="state not in ('draft', 'error')"/>
+                    <button name="action_import_to_accounting" string="Importar para Contabilidade" type="object"
+                        class="btn-secondary"
+                        invisible="state != 'imported'"/>
+                    <button name="action_view_bank_statement" string="Ver Extrato Contábil" type="object"
+                        class="btn-secondary"
+                        invisible="not bank_statement_id"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,fetching,imported,error"
+                        clickable="False"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="config_id" required="1"/>
+                            <field name="consent_id" required="1"
+                                domain="[('status', 'in', ('authorized', 'active')), ('config_id', '=', config_id)]"/>
+                            <field name="journal_ids" widget="many2many_tags"
+                                placeholder="Diários para criar os extratos"/>
+                        </group>
+                        <group>
+                            <field name="date_from" required="1"/>
+                            <field name="date_to" required="1"/>
+                            <field name="total_transactions" readonly="1"/>
+                            <field name="total_debit" readonly="1" widget="monetary"/>
+                            <field name="total_credit" readonly="1" widget="monetary"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Transações">
+                            <field name="statement_line_ids" readonly="1">
+                                <list limit="50" editable="bottom">
+                                    <field name="date"/>
+                                    <field name="description"/>
+                                    <field name="amount" widget="monetary"/>
+                                    <field name="payment_type"/>
+                                    <field name="partner_name"/>
+                                    <field name="partner_document"/>
+                                    <field name="end_to_end_id"/>
+                                    <field name="imported"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Logs" name="logs">
+                            <field name="api_log_ids" readonly="1">
+                                <list limit="15">
+                                    <field name="create_date"/>
+                                    <field name="method"/>
+                                    <field name="endpoint"/>
+                                    <field name="response_status"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Erro" name="error"
+                            invisible="not error_message">
+                            <field name="error_message" readonly="1" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_open_finance_statement" model="ir.actions.act_window">
+        <field name="name">Extratos Bancários</field>
+        <field name="res_model">open.finance.statement</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+    </record>
+
+    <menuitem id="menu_open_finance_statement"
+        name="Extratos"
+        parent="l10n_br_openfinance.menu_open_finance_root"
+        action="action_open_finance_statement"
+        sequence="10"
+        groups="account.group_account_invoice,account.group_account_user,account.group_account_manager"/>
+</odoo>

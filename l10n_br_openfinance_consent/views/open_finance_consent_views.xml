@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_open_finance_consent_tree" model="ir.ui.view">
+        <field name="name">open.finance.consent.tree</field>
+        <field name="model">open.finance.consent</field>
+        <field name="arch" type="xml">
+            <list decoration-success="status in ('authorized','active')"
+                  decoration-danger="status in ('expired','revoked','rejected')"
+                  decoration-warning="status in ('draft','requested')">
+                <field name="display_name" invisible="1"/>
+                <field name="config_id"/>
+                <field name="person_type" widget="badge"
+                    decoration-info="person_type=='pf'"
+                    decoration-success="person_type=='pj'"/>
+                <field name="scope"/>
+                <field name="status" widget="badge"/>
+                <field name="date_requested"/>
+                <field name="date_expiration"/>
+                <field name="cpf_cnpj"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_open_finance_consent_form" model="ir.ui.view">
+        <field name="name">open.finance.consent.form</field>
+        <field name="model">open.finance.consent</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_request_consent" string="Solicitar Consentimento" type="object"
+                        class="btn-primary" invisible="status != 'draft'"/>
+                    <button name="action_check_status" string="Verificar Status" type="object"
+                        class="btn-secondary"
+                        invisible="status not in ('requested',)"/>
+                    <button name="action_sync_statement" string="Buscar Extrato" type="object"
+                        class="btn-secondary"
+                        invisible="status not in ('authorized', 'active')"/>
+                    <button name="action_refresh_token" string="Renovar Token" type="object"
+                        class="btn-secondary"
+                        invisible="status not in ('authorized', 'active')"/>
+                    <button name="action_revoke" string="Revogar" type="object"
+                        class="btn-danger"
+                        invisible="status not in ('authorized', 'active')"
+                        confirm="Tem certeza que deseja revogar este consentimento?"/>
+                    <field name="status" widget="statusbar" statusbar_visible="draft,requested,authorized"
+                        clickable="False"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="config_id" required="1"/>
+                            <field name="person_type" required="1"
+                                widget="radio"/>
+                            <field name="scope" required="1"/>
+                            <field name="cpf_cnpj"
+                                required="status == 'draft'"
+                                placeholder="CPF/CNPJ do titular da conta"/>
+                            <field name="partner_id"/>
+                        </group>
+                        <group>
+                            <field name="consent_id" readonly="1"/>
+                            <field name="status" widget="badge" readonly="1"/>
+                            <field name="date_expiration" readonly="1"/>
+                            <field name="date_authorized" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="QR Code para Autorização"
+                        invisible="not qr_code">
+                        <field name="qr_code" widget="image" class="oe_avatar"
+                            options="{'size': [200, 200]}"/>
+                        <field name="qr_code_text" readonly="1" nolabel="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Diários" name="journals">
+                            <field name="journal_ids" widget="many2many_tags"
+                                readonly="status != 'draft'">
+                            </field>
+                        </page>
+                        <page string="Tokens" name="tokens" groups="base.group_system">
+                            <group>
+                                <field name="access_token" password="True"/>
+                                <field name="refresh_token" password="True"/>
+                                <field name="token_expiry"/>
+                            </group>
+                        </page>
+                        <page string="Logs" name="logs">
+                            <field name="api_log_ids" readonly="1">
+                                <list limit="15">
+                                    <field name="create_date"/>
+                                    <field name="method"/>
+                                    <field name="endpoint"/>
+                                    <field name="response_status"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Observações" name="notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_open_finance_consent" model="ir.actions.act_window">
+        <field name="name">Consentimentos</field>
+        <field name="res_model">open.finance.consent</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+    </record>
+
+    <menuitem id="menu_open_finance_consent"
+        name="Consentimentos"
+        parent="l10n_br_openfinance.menu_open_finance_root"
+        action="action_open_finance_consent"
+        sequence="40"
+        groups="account.group_account_invoice,account.group_account_user,account.group_account_manager"/>
+</odoo>

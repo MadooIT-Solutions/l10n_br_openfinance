@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_open_finance_config,open.finance.config,model_open_finance_config,account.group_account_manager,1,1,1,1
+access_open_finance_config_user,open.finance.config.user,model_open_finance_config,account.group_account_user,1,0,0,0
+access_open_finance_config_invoice,open.finance.config.invoice,model_open_finance_config,account.group_account_invoice,1,0,0,0
+access_open_finance_api,open.finance.api,model_open_finance_api,base.group_system,1,1,1,1
+access_open_finance_api_log,open.finance.api.log,model_open_finance_api_log,account.group_account_manager,1,0,0,0
+access_open_finance_api_log_system,open.finance.api.log.system,model_open_finance_api_log,base.group_system,1,1,1,1

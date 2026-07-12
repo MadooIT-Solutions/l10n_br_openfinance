@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_journal_form_inherit_open_finance" model="ir.ui.view">
+        <field name="name">account.journal.form.inherit.open.finance</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Open Finance" name="open_finance">
+                    <group string="Configurações Open Finance">
+                        <field name="open_finance_config_ids" widget="many2many_tags"/>
+                        <field name="open_finance_consent_ids" widget="many2many_tags"/>
+                    </group>
+                    <group string="Dados Bancários">
+                        <group>
+                            <field name="open_finance_bank_code"/>
+                            <field name="open_finance_wallet"/>
+                        </group>
+                        <group>
+                            <field name="open_finance_agency"/>
+                            <field name="open_finance_account"/>
+                        </group>
+                    </group>
+                    <group string="Chave Pix">
+                        <field name="open_finance_pix_key"/>
+                        <field name="open_finance_pix_key_type"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

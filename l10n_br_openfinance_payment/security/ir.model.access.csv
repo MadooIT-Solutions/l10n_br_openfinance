@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_open_finance_pix,open.finance.pix,model_open_finance_pix,account.group_account_manager,1,1,1,1
+access_open_finance_pix_user,open.finance.pix.user,model_open_finance_pix,account.group_account_user,1,1,1,0
+access_open_finance_pix_invoice,open.finance.pix.invoice,model_open_finance_pix,account.group_account_invoice,1,1,1,0
+access_open_finance_boleto,open.finance.boleto,model_open_finance_boleto,account.group_account_manager,1,1,1,1
+access_open_finance_boleto_user,open.finance.boleto.user,model_open_finance_boleto,account.group_account_user,1,1,1,0
+access_open_finance_boleto_invoice,open.finance.boleto.invoice,model_open_finance_boleto,account.group_account_invoice,1,1,1,0

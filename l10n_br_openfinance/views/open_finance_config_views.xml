@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_open_finance_config_tree" model="ir.ui.view">
+        <field name="name">open.finance.config.tree</field>
+        <field name="model">open.finance.config</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="environment=='production' and not active" decoration-success="active">
+                <field name="display_name" invisible="1"/>
+                <field name="institution_name"/>
+                <field name="environment" widget="badge" decoration-success="environment=='production'" decoration-info="environment=='sandbox'"/>
+                <field name="active_consent_count" string="Consentimentos"/>
+                <field name="certificate_id"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_open_finance_config_form" model="ir.ui.view">
+        <field name="name">open.finance.config.form</field>
+        <field name="model">open.finance.config</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="test_connection" string="Testar Conexão" type="object" class="btn-secondary"/>
+                    <button name="action_open_consents" string="Consentimentos" type="object"
+                        class="btn-secondary"
+                        invisible="active_consent_count == 0"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_consents" type="object" class="oe_stat_button"
+                            icon="fa-lock">
+                            <span>Consentimentos</span>
+                        </button>
+                        <button name="action_open_statements" type="object" class="oe_stat_button"
+                            icon="fa-file-text-o">
+                            <span>Extratos</span>
+                        </button>
+                        <button name="action_open_pix" type="object" class="oe_stat_button"
+                            icon="fa-bolt">
+                            <span>Pix</span>
+                        </button>
+                    </div>
+                    <group>
+                        <group string="Instituição">
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="institution_name" required="1"/>
+                            <field name="institution_cnpj"/>
+                            <field name="environment" widget="radio" required="1"/>
+                        </group>
+                        <group string="Autenticação">
+                            <field name="certificate_id" required="1" options="{'no_create': True}"/>
+                            <field name="client_id" password="True" required="1"/>
+                            <field name="client_secret" password="True" required="1"/>
+                        </group>
+                    </group>
+                    <group string="Endpoints">
+                        <group>
+                            <field name="api_base_url" required="1" placeholder="https://api.sandbox.openfinance.com.br"/>
+                            <field name="auth_url" placeholder="https://auth.openfinance.com.br"/>
+                        </group>
+                        <group>
+                            <field name="token_url" placeholder="https://auth.openfinance.com.br/token"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Consentimentos">
+                            <field name="consent_ids">
+                                <list limit="15">
+                                    <field name="display_name"/>
+                                    <field name="scope"/>
+                                    <field name="status" widget="badge"
+                                        decoration-success="status in ('authorized','active')"
+                                        decoration-danger="status in ('expired','revoked','rejected')"
+                                        decoration-warning="status in ('draft','requested')"/>
+                                    <field name="date_expiration"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_open_finance_config" model="ir.actions.act_window">
+        <field name="name">Instituições Financeiras</field>
+        <field name="res_model">open.finance.config</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p>Configure as instituições financeiras para integração Open Finance.</p>
+            <p>Você precisará do certificado A1, Client ID e Client Secret fornecidos pela instituição.</p>
+        </field>
+    </record>
+</odoo>

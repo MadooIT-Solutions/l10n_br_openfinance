@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_open_finance_pix_tree" model="ir.ui.view">
+        <field name="name">open.finance.pix.tree</field>
+        <field name="model">open.finance.pix</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state=='completed'"
+                  decoration-danger="state in ('failed','cancelled')"
+                  decoration-warning="state in ('draft','pending')"
+                  decoration-info="state=='refunded'">
+                <field name="display_name" invisible="1"/>
+                <field name="config_id"/>
+                <field name="type"/>
+                <field name="direction"/>
+                <field name="partner_name"/>
+                <field name="amount" sum="Total" widget="monetary"/>
+                <field name="state" widget="badge"/>
+                <field name="date_confirmed"/>
+                <field name="end_to_end_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_open_finance_pix_form" model="ir.ui.view">
+        <field name="name">open.finance.pix.form</field>
+        <field name="model">open.finance.pix</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_send_pix" string="Enviar Pix" type="object"
+                        class="btn-primary"
+                        invisible="state != 'draft'"/>
+                    <button name="action_generate_qr_code" string="Gerar QR Code" type="object"
+                        class="btn-secondary"
+                        invisible="not emv"/>
+                    <button name="action_check_status" string="Verificar Status" type="object"
+                        class="btn-secondary"
+                        invisible="state not in ('pending',)"/>
+                    <button name="action_create_account_payment" string="Criar Pagamento" type="object"
+                        class="btn-secondary"
+                        invisible="state != 'completed'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,pending,completed,failed"
+                        clickable="False"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="config_id" required="1"/>
+                            <field name="consent_id"
+                                domain="[('scope', 'in', ('payment_pix','read_extrato_payment_pix','read_all_pf','read_all_pj')),
+                                         ('status', 'in', ('authorized','active'))]"/>
+                            <field name="type" required="1"/>
+                            <field name="amount" required="1" widget="monetary"/>
+                            <field name="description"/>
+                        </group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="partner_document"/>
+                            <field name="pix_key"/>
+                            <field name="pix_key_type"/>
+                        </group>
+                    </group>
+                    <group string="QR Code"
+                        invisible="not qr_code_image">
+                        <field name="qr_code_image" widget="image" class="oe_avatar"
+                            options="{'size': [200, 200]}"/>
+                        <field name="emv" readonly="1" nolabel="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Detalhes da Transação">
+                            <group>
+                                <field name="txid" readonly="1"/>
+                                <field name="end_to_end_id" readonly="1"/>
+                                <field name="date_requested" readonly="1"/>
+                                <field name="date_confirmed" readonly="1"/>
+                                <field name="date_settlement" readonly="1"/>
+                            </group>
+                        </page>
+                        <page string="Vínculos">
+                            <group>
+                                <field name="payment_id"/>
+                                <field name="invoice_id"/>
+                            </group>
+                        </page>
+                        <page string="Logs" name="logs">
+                            <field name="api_log_ids" readonly="1">
+                                <list limit="15">
+                                    <field name="create_date"/>
+                                    <field name="method"/>
+                                    <field name="endpoint"/>
+                                    <field name="response_status"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Observações" name="notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_open_finance_pix" model="ir.actions.act_window">
+        <field name="name">Transações Pix</field>
+        <field name="res_model">open.finance.pix</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+    </record>
+
+    <menuitem id="menu_open_finance_pix"
+        name="Pix"
+        parent="l10n_br_openfinance.menu_open_finance_root"
+        action="action_open_finance_pix"
+        sequence="20"
+        groups="account.group_account_invoice,account.group_account_user,account.group_account_manager"/>
+</odoo>

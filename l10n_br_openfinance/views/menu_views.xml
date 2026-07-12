@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_open_finance_root"
+        name="Open Finance"
+        parent="account.menu_finance"
+        sequence="50"
+        groups="account.group_account_invoice,account.group_account_user,account.group_account_manager"/>
+
+    <menuitem id="menu_open_finance_config"
+        name="Instituições Financeiras"
+        parent="menu_open_finance_root"
+        action="action_open_finance_config"
+        sequence="50"
+        groups="base.group_no_one"/>
+
+    <menuitem id="menu_open_finance_logs"
+        name="Logs de API"
+        parent="menu_open_finance_root"
+        action="action_open_finance_api_log"
+        sequence="60"
+        groups="base.group_no_one"/>
+</odoo>

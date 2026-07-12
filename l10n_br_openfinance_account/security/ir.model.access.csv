@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_open_finance_statement,open.finance.statement,model_open_finance_statement,account.group_account_manager,1,1,1,1
+access_open_finance_statement_user,open.finance.statement.user,model_open_finance_statement,account.group_account_user,1,1,1,0
+access_open_finance_statement_invoice,open.finance.statement.invoice,model_open_finance_statement,account.group_account_invoice,1,0,0,0
+access_open_finance_statement_line,open.finance.statement.line,model_open_finance_statement_line,account.group_account_manager,1,1,1,1
+access_open_finance_statement_line_user,open.finance.statement.line.user,model_open_finance_statement_line,account.group_account_user,1,1,1,0
+access_open_finance_statement_line_invoice,open.finance.statement.line.invoice,model_open_finance_statement_line,account.group_account_invoice,1,0,0,0

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_open_finance_api_log_tree" model="ir.ui.view">
+        <field name="name">open.finance.api.log.tree</field>
+        <field name="model">open.finance.api.log</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state=='success'"
+                  decoration-danger="state=='error'">
+                <field name="display_name" invisible="1"/>
+                <field name="config_id"/>
+                <field name="method"/>
+                <field name="endpoint"/>
+                <field name="response_status"/>
+                <field name="state" widget="badge"/>
+                <field name="create_date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_open_finance_api_log_form" model="ir.ui.view">
+        <field name="name">open.finance.api.log.form</field>
+        <field name="model">open.finance.api.log</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="config_id"/>
+                            <field name="method"/>
+                            <field name="endpoint"/>
+                            <field name="state" widget="badge"/>
+                        </group>
+                        <group>
+                            <field name="response_status"/>
+                            <field name="create_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Requisição">
+                            <field name="request_data" readonly="1" nolabel="1"/>
+                        </page>
+                        <page string="Resposta">
+                            <field name="response_data" readonly="1" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_open_finance_api_log" model="ir.actions.act_window">
+        <field name="name">Logs de API</field>
+        <field name="res_model">open.finance.api.log</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+    </record>
+</odoo>

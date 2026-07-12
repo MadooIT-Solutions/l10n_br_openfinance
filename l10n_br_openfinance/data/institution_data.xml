@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="open_finance_config_bb" model="open.finance.config">
+        <field name="institution_name">Banco do Brasil</field>
+        <field name="institution_cnpj">00.000.000/0001-91</field>
+        <field name="environment">sandbox</field>
+    </record>
+
+    <record id="open_finance_config_caixa" model="open.finance.config">
+        <field name="institution_name">Caixa Econômica Federal</field>
+        <field name="institution_cnpj">00.360.305/0001-04</field>
+        <field name="environment">sandbox</field>
+    </record>
+
+    <record id="open_finance_config_bradesco" model="open.finance.config">
+        <field name="institution_name">Bradesco</field>
+        <field name="institution_cnpj">60.746.948/0001-12</field>
+        <field name="environment">sandbox</field>
+    </record>
+
+    <record id="open_finance_config_itau" model="open.finance.config">
+        <field name="institution_name">Itaú Unibanco</field>
+        <field name="institution_cnpj">60.701.190/0001-04</field>
+        <field name="environment">sandbox</field>
+    </record>
+
+    <record id="open_finance_config_santander" model="open.finance.config">
+        <field name="institution_name">Santander Brasil</field>
+        <field name="institution_cnpj">90.400.888/0001-42</field>
+        <field name="environment">sandbox</field>
+    </record>
+
+    <record id="open_finance_config_btg" model="open.finance.config">
+        <field name="institution_name">BTG Pactual</field>
+        <field name="institution_cnpj">30.306.294/0001-45</field>
+        <field name="environment">sandbox</field>
+    </record>
+
+    <record id="open_finance_config_nubank" model="open.finance.config">
+        <field name="institution_name">Nubank</field>
+        <field name="institution_cnpj">18.236.120/0001-58</field>
+        <field name="environment">sandbox</field>
+    </record>
+
+    <record id="open_finance_config_inter" model="open.finance.config">
+        <field name="institution_name">Banco Inter</field>
+        <field name="institution_cnpj">00.416.968/0001-01</field>
+        <field name="environment">sandbox</field>
+    </record>
+
+    <record id="open_finance_config_c6" model="open.finance.config">
+        <field name="institution_name">C6 Bank</field>
+        <field name="institution_cnpj">31.872.495/0001-72</field>
+        <field name="environment">sandbox</field>
+    </record>
+
+    <record id="open_finance_config_safra" model="open.finance.config">
+        <field name="institution_name">Banco Safra</field>
+        <field name="institution_cnpj">58.160.789/0001-28</field>
+        <field name="environment">sandbox</field>
+    </record>
+
+    <record id="open_finance_config_original" model="open.finance.config">
+        <field name="institution_name">Banco Original</field>
+        <field name="institution_cnpj">92.894.922/0001-08</field>
+        <field name="environment">sandbox</field>
+    </record>
+
+    <record id="open_finance_config_mercadopago" model="open.finance.config">
+        <field name="institution_name">Mercado Pago</field>
+        <field name="institution_cnpj">10.573.521/0001-91</field>
+        <field name="environment">sandbox</field>
+    </record>
+
+    <record id="open_finance_config_picpay" model="open.finance.config">
+        <field name="institution_name">PicPay</field>
+        <field name="institution_cnpj">22.896.431/0001-10</field>
+        <field name="environment">sandbox</field>
+    </record>
+
+    <record id="open_finance_config_stone" model="open.finance.config">
+        <field name="institution_name">Stone Pagamentos</field>
+        <field name="institution_cnpj">16.501.555/0001-57</field>
+        <field name="environment">sandbox</field>
+    </record>
+
+    <record id="open_finance_config_pagbank" model="open.finance.config">
+        <field name="institution_name">PagBank</field>
+        <field name="institution_cnpj">08.561.701/0001-01</field>
+        <field name="environment">sandbox</field>
+    </record>
+</odoo>

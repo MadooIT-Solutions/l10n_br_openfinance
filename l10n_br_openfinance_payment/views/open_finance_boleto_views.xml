@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_open_finance_boleto_tree" model="ir.ui.view">
+        <field name="name">open.finance.boleto.tree</field>
+        <field name="model">open.finance.boleto</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state=='paid'"
+                  decoration-danger="state in ('overdue','cancelled','failed')"
+                  decoration-warning="state in ('draft','registered')">
+                <field name="display_name" invisible="1"/>
+                <field name="partner_name"/>
+                <field name="partner_document"/>
+                <field name="amount" sum="Total" widget="monetary"/>
+                <field name="date_due"/>
+                <field name="state" widget="badge"/>
+                <field name="linha_digitavel"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_open_finance_boleto_form" model="ir.ui.view">
+        <field name="name">open.finance.boleto.form</field>
+        <field name="model">open.finance.boleto</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_register_boleto" string="Registrar Boleto" type="object"
+                        class="btn-primary"
+                        invisible="state != 'draft'"/>
+                    <button name="action_print_boleto" string="Imprimir Boleto" type="object"
+                        class="btn-secondary"
+                        invisible="not boleto_pdf"/>
+                    <button name="action_check_payment_status" string="Verificar Pagamento" type="object"
+                        class="btn-secondary"
+                        invisible="state not in ('registered','overdue')"/>
+                    <button name="action_cancel" string="Cancelar" type="object"
+                        class="btn-danger"
+                        invisible="state not in ('draft','registered')"
+                        confirm="Tem certeza que deseja cancelar este boleto?"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,registered,paid,cancelled"
+                        clickable="False"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="config_id" required="1"/>
+                            <field name="partner_id" required="1"/>
+                            <field name="partner_name"/>
+                            <field name="partner_document"/>
+                        </group>
+                        <group>
+                            <field name="amount" required="1" widget="monetary"/>
+                            <field name="date_issue" required="1"/>
+                            <field name="date_due" required="1"/>
+                            <field name="date_paid" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Informações Bancárias">
+                        <group>
+                            <field name="bank_code"/>
+                            <field name="bank_name"/>
+                            <field name="wallet"/>
+                        </group>
+                        <group>
+                            <field name="recipient_agency"/>
+                            <field name="recipient_account"/>
+                        </group>
+                    </group>
+                    <group string="Informações do Boleto"
+                        invisible="not linha_digitavel">
+                        <field name="linha_digitavel" readonly="1"/>
+                        <field name="codigo_barras" readonly="1"/>
+                        <field name="nosso_numero" readonly="1"/>
+                        <field name="nosso_numero_formatado" readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Encargos">
+                            <group>
+                                <field name="interest_rate"/>
+                                <field name="fine_rate"/>
+                                <field name="date_discount"/>
+                            </group>
+                        </page>
+                        <page string="Descrição e Instruções">
+                            <field name="description" nolabel="1"/>
+                            <field name="instructions" nolabel="1"/>
+                        </page>
+                        <page string="Vínculos">
+                            <group>
+                                <field name="invoice_id"/>
+                                <field name="payment_id"/>
+                            </group>
+                        </page>
+                        <page string="Logs" name="logs">
+                            <field name="api_log_ids" readonly="1">
+                                <list limit="15">
+                                    <field name="create_date"/>
+                                    <field name="method"/>
+                                    <field name="endpoint"/>
+                                    <field name="response_status"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_open_finance_boleto" model="ir.actions.act_window">
+        <field name="name">Boletos</field>
+        <field name="res_model">open.finance.boleto</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+    </record>
+
+    <menuitem id="menu_open_finance_boleto"
+        name="Boletos"
+        parent="l10n_br_openfinance.menu_open_finance_root"
+        action="action_open_finance_boleto"
+        sequence="30"
+        groups="account.group_account_invoice,account.group_account_user,account.group_account_manager"/>
+</odoo>
