@@ -348,7 +348,114 @@ O credenciamento no Open Finance Brasil segue o fluxo abaixo:
 
 ---
 
-## 5. Glossário
+## 5. Testes com Sandbox
+
+### 5.1. Conceito
+
+O **sandbox** é um ambiente de homologação isolado do ambiente produtivo. Cada banco disponibiliza endpoints específicos para testes, que simulam o comportamento real das APIs Open Finance sem movimentar valores ou dados reais.
+
+### 5.2. Fluxo de Testes no Sandbox
+
+```
+1. Cadastro no portal do desenvolvedor
+2. Obter Client ID / Client Secret (sandbox)
+3. Configurar certificado A1 (teste) no Odoo
+4. Configurar instituição com URL do sandbox
+5. Solicitar consentimento de teste
+6. Buscar extratos / realizar pagamentos
+7. Validar respostas e logs
+8. Migrar para produção
+```
+
+### 5.3. Configuração no Odoo
+
+1. Acesse **Open Finance → Configuração → Instituições Financeiras**
+2. Selecione a instituição desejada ou crie uma nova
+3. No campo **Ambiente**, escolha **Sandbox (Homologação)**
+4. Insira o **Client ID** e **Client Secret** fornecidos pelo portal de desenvolvedores (ambiente sandbox)
+5. Em **URL Base API**, insira o endpoint de sandbox do banco (ex: `https://api.sandbox.banco.com.br`)
+6. Configure o **certificado digital** (pode ser um certificado A1 de testes ICP-Brasil)
+7. Associe a instituição a um **diário bancário**
+
+### 5.4. Testar a Conexão
+
+Após configurar a instituição no sandbox:
+
+1. Abra o formulário da instituição
+2. Clique em **Testar Conexão**
+3. O sistema tentará uma requisição `health check` para a API
+4. Sucesso: notificação verde com mensagem de conexão estabelecida
+5. Erro: notificação vermelha com a mensagem de erro detalhada
+
+Caso o teste falhe, verifique nos **Logs de API** a resposta completa do servidor.
+
+### 5.5. Fluxo Completo de Teste
+
+**Passo 1 — Consentimento:**
+1. Crie um consentimento com o escopo desejado (ex: `read_extrato_pf`)
+2. Clique em **Solicitar Consentimento**
+3. Um QR Code será gerado — use o app do banco no ambiente sandbox para autorizar
+4. Após autorizar, clique em **Verificar Status**
+5. O status deve mudar para `authorized` ou `active`
+
+**Passo 2 — Extrato:**
+1. Com o consentimento ativo, crie um **Extrato Bancário**
+2. Defina o período (data início / data fim)
+3. Clique em **Buscar Extrato**
+4. As transações serão importadas do sandbox
+5. Verifique os dados importados na lista de linhas do extrato
+
+**Passo 3 — Pagamento:**
+1. Crie um **Pix** ou **Boleto** no ambiente sandbox
+2. Preencha os dados do pagamento
+3. Confirme a transação
+4. Verifique o status e o retorno da API nos logs
+
+### 5.6. Endpoints de Sandbox por Banco
+
+| Banco | URL Base Sandbox (exemplo) |
+|-------|---------------------------|
+| Banco do Brasil | `https://api.sandbox.bb.com.br/open-finance` |
+| Caixa | `https://openfinance-sandbox.caixa.gov.br` |
+| Bradesco | `https://api.hml.bradesco.com.br/open-banking` |
+| Itaú | `https://sandbox.devportal.itau.com.br/api` |
+| Santander | `https://api-sandbox.santander.com.br/open-finance` |
+| Inter | `https://apis.inter.co/sandbox/open-finance` |
+| C6 Bank | `https://api.sandbox.c6bank.com.br/open-finance` |
+| BTG | `https://api.sandbox.btgpactual.com/open-finance` |
+| Safra | `https://api.sandbox.luxhub.com/open-finance` |
+| Original | `https://api.sandbox.original.com.br/open-finance` |
+| Mercado Pago | `https://api.mercadopago.com/open-finance/sandbox` |
+| PicPay | `https://api.sandbox.picpay.com/open-finance` |
+| Stone | `https://api.sandbox.stone.com.br/open-finance` |
+| PagBank | `https://api.sandbox.pagbank.com.br/open-finance` |
+
+> **Nota:** As URLs acima são ilustrativas. Consulte o portal do desenvolvedor de cada instituição para obter os endpoints exatos do ambiente sandbox.
+
+### 5.7. Dicas para Testes
+
+- **Certificado de teste:** Utilize um certificado A1 ICP-Brasil de testes (válido, mas não necessariamente de produção)
+- **Dados fictícios:** No sandbox, use CPFs e CNPJs fictícios ou fornecidos pelo banco
+- **Consentimento:** Alguns bancos oferecem um app específico de sandbox para autorizar consentimentos
+- **Rate limiting:** Ambientes sandbox podem ter limites de requisição mais restritivos
+- **Reset periódico:** Dados do sandbox podem ser resetados periodicamente — não use dados importantes
+
+### 5.8. Erros Comuns no Sandbox
+
+| Erro | Possível Causa | Solução |
+|------|---------------|---------|
+| `Certificate not found` | Certificado não configurado ou expirado | Verifique o certificado em **Configurações da Empresa** |
+| `Invalid client_id` | Client ID do ambiente errado (sandbox vs produção) | Confirme se o Client ID é do sandbox |
+| `Consent not authorized` | Consentimento não foi aprovado no app do banco | Abra o QR Code e autorize no app de teste |
+| `Token expired` | Access token expirou | Use **Renovar Token** ou solicite novo consentimento |
+| `Scope not allowed` | Escopo não liberado para seu Client ID | Verifique as permissões no portal do desenvolvedor |
+| `HTTP 401` | Credenciais inválidas ou mTLS incorreto | Verifique Client ID, Secret e certificado |
+| `HTTP 403` | Sem permissão para o recurso solicitado | Verifique escopos e autorização BACEN |
+| `HTTP 429` | Muitas requisições | Aguarde e tente novamente |
+
+---
+
+## 6. Glossário
 
 | Termo | Descrição |
 |-------|-----------|
@@ -370,7 +477,7 @@ O credenciamento no Open Finance Brasil segue o fluxo abaixo:
 
 ---
 
-## 6. Referências
+## 7. Referências
 
 - [Open Finance Brasil — Especificações Técnicas](https://openfinancebrasil.org.br)
 - [Diretório Central de Participantes](https://web.directory.opinion.tecban.com.br)
