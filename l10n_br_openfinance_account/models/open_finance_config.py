@@ -23,5 +23,5 @@ class OpenFinanceConfig(models.Model):
             'res_model': 'open.finance.statement',
             'domain': [('config_id', '=', self.id)],
             'context': {'default_config_id': self.id},
-            'view_mode': 'list,form',
+            'view_mode': 'tree,form',
         }

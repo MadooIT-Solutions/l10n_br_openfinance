@@ -4,7 +4,7 @@
         <field name="name">open.finance.pix.tree</field>
         <field name="model">open.finance.pix</field>
         <field name="arch" type="xml">
-            <list decoration-success="state=='completed'"
+            <tree decoration-success="state=='completed'"
                   decoration-danger="state in ('failed','cancelled')"
                   decoration-warning="state in ('draft','pending')"
                   decoration-info="state=='refunded'">
@@ -17,7 +17,7 @@
                 <field name="state" widget="badge"/>
                 <field name="date_confirmed"/>
                 <field name="end_to_end_id"/>
-            </list>
+            </tree>
         </field>
     </record>
 
@@ -29,16 +29,16 @@
                 <header>
                     <button name="action_send_pix" string="Enviar Pix" type="object"
                         class="btn-primary"
-                        invisible="state != 'draft'"/>
+                        attrs="{'invisible': [('state', '!=', 'draft')]}"/>
                     <button name="action_generate_qr_code" string="Gerar QR Code" type="object"
                         class="btn-secondary"
-                        invisible="not emv"/>
+                        attrs="{'invisible': [('emv', '=', False)]}"/>
                     <button name="action_check_status" string="Verificar Status" type="object"
                         class="btn-secondary"
-                        invisible="state not in ('pending',)"/>
+                        attrs="{'invisible': [('state', 'not in', ('pending',))]}"/>
                     <button name="action_create_account_payment" string="Criar Pagamento" type="object"
                         class="btn-secondary"
-                        invisible="state != 'completed'"/>
+                        attrs="{'invisible': [('state', '!=', 'completed')]}"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,pending,completed,failed"
                         clickable="False"/>
                 </header>
@@ -61,7 +61,7 @@
                         </group>
                     </group>
                     <group string="QR Code"
-                        invisible="not qr_code_image">
+                        attrs="{'invisible': [('qr_code_image', '=', False)]}">
                         <field name="qr_code_image" widget="image" class="oe_avatar"
                             options="{'size': [200, 200]}"/>
                         <field name="emv" readonly="1" nolabel="1"/>
@@ -84,13 +84,13 @@
                         </page>
                         <page string="Logs" name="logs">
                             <field name="api_log_ids" readonly="1">
-                                <list limit="15">
+                                <tree limit="15">
                                     <field name="create_date"/>
                                     <field name="method"/>
                                     <field name="endpoint"/>
                                     <field name="response_status"/>
                                     <field name="state" widget="badge"/>
-                                </list>
+                                </tree>
                             </field>
                         </page>
                         <page string="Observações" name="notes">
@@ -105,7 +105,7 @@
     <record id="action_open_finance_pix" model="ir.actions.act_window">
         <field name="name">Transações Pix</field>
         <field name="res_model">open.finance.pix</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">tree,form</field>
         <field name="domain">[]</field>
     </record>
 

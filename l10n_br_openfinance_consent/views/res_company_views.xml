@@ -8,12 +8,12 @@
             <group name="open_finance_configs" position="after">
                 <group string="Consentimentos">
                     <field name="open_finance_consent_ids">
-                        <list limit="10">
+                        <tree limit="10">
                             <field name="display_name"/>
                             <field name="status" widget="badge"/>
                             <field name="scope"/>
                             <field name="date_expiration"/>
-                        </list>
+                        </tree>
                     </field>
                 </group>
             </group>

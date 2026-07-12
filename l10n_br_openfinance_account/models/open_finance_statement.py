@@ -1,4 +1,4 @@
-from odoo import models, fields, api, _, Command
+from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 
 
@@ -177,7 +177,7 @@ class OpenFinanceStatement(models.Model):
             for line in self.statement_line_ids:
                 if line.imported:
                     continue
-                line_commands.append(Command.create({
+                line_commands.append((0, 0, {
                     'date': line.date,
                     'payment_ref': line.description or line.transaction_id or '',
                     'amount': abs(line.amount) if line.amount else 0.0,

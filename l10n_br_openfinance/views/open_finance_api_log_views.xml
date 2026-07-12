@@ -4,7 +4,7 @@
         <field name="name">open.finance.api.log.tree</field>
         <field name="model">open.finance.api.log</field>
         <field name="arch" type="xml">
-            <list decoration-success="state=='success'"
+            <tree decoration-success="state=='success'"
                   decoration-danger="state=='error'">
                 <field name="display_name" invisible="1"/>
                 <field name="config_id"/>
@@ -13,7 +13,7 @@
                 <field name="response_status"/>
                 <field name="state" widget="badge"/>
                 <field name="create_date"/>
-            </list>
+            </tree>
         </field>
     </record>
 
@@ -51,7 +51,7 @@
     <record id="action_open_finance_api_log" model="ir.actions.act_window">
         <field name="name">Logs de API</field>
         <field name="res_model">open.finance.api.log</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">tree,form</field>
         <field name="domain">[]</field>
     </record>
 </odoo>

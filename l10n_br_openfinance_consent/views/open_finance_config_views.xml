@@ -8,7 +8,7 @@
             <button name="test_connection" position="after">
                 <button name="action_open_consents" string="Consentimentos" type="object"
                     class="btn-secondary"
-                    invisible="active_consent_count == 0"/>
+                    attrs="{'invisible': [('active_consent_count', '=', 0)]}"/>
             </button>
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button name="action_open_consents" type="object" class="oe_stat_button"
@@ -19,7 +19,7 @@
             <xpath expr="//notebook" position="inside">
                 <page string="Consentimentos">
                     <field name="consent_ids">
-                        <list limit="15">
+                        <tree limit="15">
                             <field name="display_name"/>
                             <field name="scope"/>
                             <field name="status" widget="badge"
@@ -27,7 +27,7 @@
                                 decoration-danger="status in ('expired','revoked','rejected')"
                                 decoration-warning="status in ('draft','requested')"/>
                             <field name="date_expiration"/>
-                        </list>
+                        </tree>
                     </field>
                 </page>
             </xpath>

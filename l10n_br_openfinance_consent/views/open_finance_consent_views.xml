@@ -4,7 +4,7 @@
         <field name="name">open.finance.consent.tree</field>
         <field name="model">open.finance.consent</field>
         <field name="arch" type="xml">
-            <list decoration-success="status in ('authorized','active')"
+            <tree decoration-success="status in ('authorized','active')"
                   decoration-danger="status in ('expired','revoked','rejected')"
                   decoration-warning="status in ('draft','requested')">
                 <field name="display_name" invisible="1"/>
@@ -17,7 +17,7 @@
                 <field name="date_requested"/>
                 <field name="date_expiration"/>
                 <field name="cpf_cnpj"/>
-            </list>
+            </tree>
         </field>
     </record>
 
@@ -28,16 +28,16 @@
             <form>
                 <header>
                     <button name="action_request_consent" string="Solicitar Consentimento" type="object"
-                        class="btn-primary" invisible="status != 'draft'"/>
+                        class="btn-primary" attrs="{'invisible': [('status', '!=', 'draft')]}"/>
                     <button name="action_check_status" string="Verificar Status" type="object"
                         class="btn-secondary"
-                        invisible="status not in ('requested',)"/>
+                        attrs="{'invisible': [('status', 'not in', ('requested',))]}"/>
                     <button name="action_refresh_token" string="Renovar Token" type="object"
                         class="btn-secondary"
-                        invisible="status not in ('authorized', 'active')"/>
+                        attrs="{'invisible': [('status', 'not in', ('authorized', 'active'))]}"/>
                     <button name="action_revoke" string="Revogar" type="object"
                         class="btn-danger"
-                        invisible="status not in ('authorized', 'active')"
+                        attrs="{'invisible': [('status', 'not in', ('authorized', 'active'))]}"
                         confirm="Tem certeza que deseja revogar este consentimento?"/>
                     <field name="status" widget="statusbar" statusbar_visible="draft,requested,authorized"
                         clickable="False"/>
@@ -50,7 +50,7 @@
                                 widget="radio"/>
                             <field name="scope" required="1"/>
                             <field name="cpf_cnpj"
-                                required="status == 'draft'"
+                                attrs="{'required': [('status', '=', 'draft')]}"
                                 placeholder="CPF/CNPJ do titular da conta"/>
                             <field name="partner_id"/>
                         </group>
@@ -62,7 +62,7 @@
                         </group>
                     </group>
                     <group string="QR Code para Autorização"
-                        invisible="not qr_code">
+                        attrs="{'invisible': [('qr_code', '=', False)]}">
                         <field name="qr_code" widget="image" class="oe_avatar"
                             options="{'size': [200, 200]}"/>
                         <field name="qr_code_text" readonly="1" nolabel="1"/>
@@ -70,7 +70,7 @@
                     <notebook>
                         <page string="Diários" name="journals">
                             <field name="journal_ids" widget="many2many_tags"
-                                readonly="status != 'draft'">
+                                attrs="{'readonly': [('status', '!=', 'draft')]}">
                             </field>
                         </page>
                         <page string="Tokens" name="tokens" groups="base.group_system">
@@ -82,13 +82,13 @@
                         </page>
                         <page string="Logs" name="logs">
                             <field name="api_log_ids" readonly="1">
-                                <list limit="15">
+                                <tree limit="15">
                                     <field name="create_date"/>
                                     <field name="method"/>
                                     <field name="endpoint"/>
                                     <field name="response_status"/>
                                     <field name="state" widget="badge"/>
-                                </list>
+                                </tree>
                             </field>
                         </page>
                         <page string="Observações" name="notes">
@@ -103,7 +103,7 @@
     <record id="action_open_finance_consent" model="ir.actions.act_window">
         <field name="name">Consentimentos</field>
         <field name="res_model">open.finance.consent</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">tree,form</field>
         <field name="domain">[]</field>
     </record>
 

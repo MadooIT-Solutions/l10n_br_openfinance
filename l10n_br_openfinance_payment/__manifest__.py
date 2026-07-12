@@ -1,6 +1,6 @@
 {
     'name': 'Open Finance Brasil - Pagamentos',
-    'version': '18.0.1.0.0',
+    'version': '16.0.1.0.0',
     'category': 'Accounting/Localizations',
     'summary': 'Pagamentos Open Finance - Pix e Boleto',
     'description': """

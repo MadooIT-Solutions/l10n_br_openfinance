@@ -1,6 +1,6 @@
 {
     'name': 'Open Finance Brasil - Base',
-    'version': '18.0.1.0.0',
+    'version': '16.0.1.0.0',
     'category': 'Accounting/Localizations',
     'summary': 'Base do Open Finance Brasil - Configuração, API e Logs',
     'description': """

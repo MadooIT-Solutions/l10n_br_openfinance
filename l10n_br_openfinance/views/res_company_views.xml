@@ -9,12 +9,12 @@
                 <page string="Open Finance" name="open_finance">
                     <group string="Instituições Financeiras" name="open_finance_configs">
                         <field name="open_finance_config_ids">
-                            <list limit="10">
+                            <tree limit="10">
                                 <field name="institution_name"/>
                                 <field name="environment"/>
                                 <field name="certificate_id"/>
                                 <field name="active"/>
-                            </list>
+                            </tree>
                         </field>
                     </group>
                 </page>

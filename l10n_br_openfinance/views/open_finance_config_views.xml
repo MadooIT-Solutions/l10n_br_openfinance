@@ -4,13 +4,13 @@
         <field name="name">open.finance.config.tree</field>
         <field name="model">open.finance.config</field>
         <field name="arch" type="xml">
-            <list decoration-danger="environment=='production' and not active" decoration-success="active">
+            <tree decoration-danger="environment=='production' and not active" decoration-success="active">
                 <field name="display_name" invisible="1"/>
                 <field name="institution_name"/>
                 <field name="environment" widget="badge" decoration-success="environment=='production'" decoration-info="environment=='sandbox'"/>
                 <field name="certificate_id"/>
                 <field name="active"/>
-            </list>
+            </tree>
         </field>
     </record>
 
@@ -58,7 +58,7 @@
     <record id="action_open_finance_config" model="ir.actions.act_window">
         <field name="name">Instituições Financeiras</field>
         <field name="res_model">open.finance.config</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">tree,form</field>
         <field name="help" type="html">
             <p>Configure as instituições financeiras para integração Open Finance.</p>
             <p>Você precisará do certificado A1, Client ID e Client Secret fornecidos pela instituição.</p>

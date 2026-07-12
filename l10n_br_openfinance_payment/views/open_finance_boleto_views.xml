@@ -4,7 +4,7 @@
         <field name="name">open.finance.boleto.tree</field>
         <field name="model">open.finance.boleto</field>
         <field name="arch" type="xml">
-            <list decoration-success="state=='paid'"
+            <tree decoration-success="state=='paid'"
                   decoration-danger="state in ('overdue','cancelled','failed')"
                   decoration-warning="state in ('draft','registered')">
                 <field name="display_name" invisible="1"/>
@@ -14,7 +14,7 @@
                 <field name="date_due"/>
                 <field name="state" widget="badge"/>
                 <field name="linha_digitavel"/>
-            </list>
+            </tree>
         </field>
     </record>
 
@@ -26,16 +26,16 @@
                 <header>
                     <button name="action_register_boleto" string="Registrar Boleto" type="object"
                         class="btn-primary"
-                        invisible="state != 'draft'"/>
+                        attrs="{'invisible': [('state', '!=', 'draft')]}"/>
                     <button name="action_print_boleto" string="Imprimir Boleto" type="object"
                         class="btn-secondary"
-                        invisible="not boleto_pdf"/>
+                        attrs="{'invisible': [('boleto_pdf', '=', False)]}"/>
                     <button name="action_check_payment_status" string="Verificar Pagamento" type="object"
                         class="btn-secondary"
-                        invisible="state not in ('registered','overdue')"/>
+                        attrs="{'invisible': [('state', 'not in', ('registered','overdue'))]}"/>
                     <button name="action_cancel" string="Cancelar" type="object"
                         class="btn-danger"
-                        invisible="state not in ('draft','registered')"
+                        attrs="{'invisible': [('state', 'not in', ('draft','registered'))]}"
                         confirm="Tem certeza que deseja cancelar este boleto?"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,registered,paid,cancelled"
                         clickable="False"/>
@@ -67,7 +67,7 @@
                         </group>
                     </group>
                     <group string="Informações do Boleto"
-                        invisible="not linha_digitavel">
+                        attrs="{'invisible': [('linha_digitavel', '=', False)]}">
                         <field name="linha_digitavel" readonly="1"/>
                         <field name="codigo_barras" readonly="1"/>
                         <field name="nosso_numero" readonly="1"/>
@@ -93,13 +93,13 @@
                         </page>
                         <page string="Logs" name="logs">
                             <field name="api_log_ids" readonly="1">
-                                <list limit="15">
+                                <tree limit="15">
                                     <field name="create_date"/>
                                     <field name="method"/>
                                     <field name="endpoint"/>
                                     <field name="response_status"/>
                                     <field name="state" widget="badge"/>
-                                </list>
+                                </tree>
                             </field>
                         </page>
                     </notebook>
@@ -111,7 +111,7 @@
     <record id="action_open_finance_boleto" model="ir.actions.act_window">
         <field name="name">Boletos</field>
         <field name="res_model">open.finance.boleto</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">tree,form</field>
         <field name="domain">[]</field>
     </record>
 

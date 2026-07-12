@@ -1,6 +1,6 @@
 {
     'name': 'Open Finance Brasil - Consentimento',
-    'version': '18.0.1.0.0',
+    'version': '16.0.1.0.0',
     'category': 'Accounting/Localizations',
     'summary': 'Gerenciamento de consentimentos Open Finance',
     'description': """
