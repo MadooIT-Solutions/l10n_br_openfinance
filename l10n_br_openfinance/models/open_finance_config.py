@@ -30,13 +30,13 @@ class OpenFinanceConfig(models.Model):
         tracking=True)
 
     client_id = fields.Char(
-        string='Client ID', required=True, tracking=True,
+        string='Client ID', tracking=True,
         help='Client ID fornecido pela instituição para autenticação OAuth2')
     client_secret = fields.Char(
-        string='Client Secret', required=True, tracking=True)
+        string='Client Secret', tracking=True)
 
     api_base_url = fields.Char(
-        string='URL Base API', required=True,
+        string='URL Base API',
         default='https://api.sandbox.openfinance.com.br',
         help='URL base da API Open Finance da instituição')
     auth_url = fields.Char(
