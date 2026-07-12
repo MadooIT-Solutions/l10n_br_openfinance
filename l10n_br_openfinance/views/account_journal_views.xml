@@ -9,7 +9,6 @@
                 <page string="Open Finance" name="open_finance">
                     <group string="Configurações Open Finance">
                         <field name="open_finance_config_ids" widget="many2many_tags"/>
-                        <field name="open_finance_consent_ids" widget="many2many_tags"/>
                     </group>
                     <group string="Dados Bancários">
                         <group>

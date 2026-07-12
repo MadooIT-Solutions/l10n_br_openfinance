@@ -16,6 +16,8 @@ Suporte a pessoa física (PF) e jurídica (PJ), autorização via QR Code e reno
     'data': [
         'security/ir.model.access.csv',
         'views/open_finance_consent_views.xml',
+        'views/res_company_views.xml',
+        'views/account_journal_views.xml',
     ],
     'installable': True,
     'application': False,

@@ -7,9 +7,6 @@ class AccountJournal(models.Model):
     open_finance_config_ids = fields.Many2many(
         'open.finance.config', string='Configurações Open Finance')
 
-    open_finance_consent_ids = fields.Many2many(
-        'open.finance.consent', string='Consentimentos')
-
     open_finance_bank_code = fields.Char(
         string='Código do Banco',
         help='Código do banco para cobrança (ex: 001, 341, 237)')

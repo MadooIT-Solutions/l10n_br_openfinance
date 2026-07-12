@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_journal_form_inherit_open_finance_consent" model="ir.ui.view">
+        <field name="name">account.journal.form.inherit.open.finance.consent</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="l10n_br_openfinance.view_account_journal_form_inherit_open_finance"/>
+        <field name="arch" type="xml">
+            <field name="open_finance_config_ids" position="after">
+                <field name="open_finance_consent_ids" widget="many2many_tags"/>
+            </field>
+        </field>
+    </record>
+</odoo>
