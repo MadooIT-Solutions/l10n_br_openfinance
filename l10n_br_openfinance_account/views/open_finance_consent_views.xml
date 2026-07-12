@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_open_finance_consent_form_inherit_account" model="ir.ui.view">
+        <field name="name">open.finance.consent.form.inherit.account</field>
+        <field name="model">open.finance.consent</field>
+        <field name="inherit_id" ref="l10n_br_openfinance_consent.view_open_finance_consent_form"/>
+        <field name="arch" type="xml">
+            <button name="action_refresh_token" position="before">
+                <button name="action_sync_statement" string="Buscar Extrato" type="object"
+                    class="btn-secondary"
+                    invisible="status not in ('authorized', 'active')"/>
+            </button>
+        </field>
+    </record>
+</odoo>

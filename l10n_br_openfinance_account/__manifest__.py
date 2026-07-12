@@ -19,6 +19,7 @@ Suporte a contas correntes, cartões de crédito e conciliação contábil autom
         'views/open_finance_statement_views.xml',
         'views/open_finance_import_views.xml',
         'views/open_finance_config_views.xml',
+        'views/open_finance_consent_views.xml',
     ],
     'installable': True,
     'application': False,
