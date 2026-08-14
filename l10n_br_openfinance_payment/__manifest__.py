@@ -8,7 +8,7 @@ Iniciação de pagamentos via Open Finance Brasil.
 Suporte a Pix e boletos de cobrança com registro, consulta e conciliação contábil.
     """,
     'author': 'MadooIT',
-    'website': 'https://www.madooit.com.br',
+    'website': 'https://www.madooit.com',
     'depends': [
         'l10n_br_openfinance',
         'l10n_br_openfinance_consent',

@@ -52,6 +52,9 @@
                             <field name="cpf_cnpj"
                                 attrs="{'required': [('status', '=', 'draft')]}"
                                 placeholder="CPF/CNPJ do titular da conta"/>
+                            <field name="logged_user_cpf"
+                                attrs="{'invisible': [('person_type', '!=', 'pj')]}"
+                                placeholder="CPF da pessoa que autoriza (obrigatório para PJ)"/>
                             <field name="partner_id"/>
                         </group>
                         <group>

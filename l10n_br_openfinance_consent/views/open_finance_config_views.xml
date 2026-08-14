@@ -6,6 +6,7 @@
         <field name="inherit_id" ref="l10n_br_openfinance.view_open_finance_config_form"/>
         <field name="arch" type="xml">
             <button name="test_connection" position="after">
+                <field name="active_consent_count" invisible="1"/>
                 <button name="action_open_consents" string="Consentimentos" type="object"
                     class="btn-secondary"
                     attrs="{'invisible': [('active_consent_count', '=', 0)]}"/>

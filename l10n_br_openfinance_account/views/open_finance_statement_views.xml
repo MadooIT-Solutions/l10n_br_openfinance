@@ -32,6 +32,7 @@
                     <button name="action_import_to_accounting" string="Importar para Contabilidade" type="object"
                         class="btn-secondary"
                         attrs="{'invisible': [('state', '!=', 'imported')]}"/>
+                    <field name="bank_statement_id" invisible="1"/>
                     <button name="action_view_bank_statement" string="Ver Extrato Contábil" type="object"
                         class="btn-secondary"
                         attrs="{'invisible': [('bank_statement_id', '=', False)]}"/>

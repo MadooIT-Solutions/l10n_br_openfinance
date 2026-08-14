@@ -1,6 +1,6 @@
 {
     'name': 'Open Finance Brasil - Base',
-    'version': '16.0.1.0.0',
+    'version': '16.0.1.0.1',
     'category': 'Accounting/Localizations',
     'summary': 'Base do Open Finance Brasil - Configuração, API e Logs',
     'description': """
@@ -8,11 +8,14 @@ Módulo base do Open Finance Brasil.
 Gerencia configurações de instituições financeiras, cliente de API e logs de requisições.
     """,
     'author': 'MadooIT',
-    'website': 'https://www.madooit.com.br',
+    'website': 'https://www.madooit.com',
     'depends': [
         'account',
         'l10n_br_fiscal_certificate',
     ],
+    'external_dependencies': {
+        'python': ['cryptography', 'requests'],
+    },
     'data': [
         'security/ir.model.access.csv',
         'data/sequence_data.xml',

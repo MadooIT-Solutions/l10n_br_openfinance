@@ -8,7 +8,7 @@ Importação e sincronização de extratos bancários via Open Finance Brasil.
 Suporte a contas correntes, cartões de crédito e conciliação contábil automática.
     """,
     'author': 'MadooIT',
-    'website': 'https://www.madooit.com.br',
+    'website': 'https://www.madooit.com',
     'depends': [
         'l10n_br_openfinance',
         'l10n_br_openfinance_consent',

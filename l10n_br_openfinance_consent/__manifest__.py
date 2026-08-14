@@ -1,6 +1,6 @@
 {
     'name': 'Open Finance Brasil - Consentimento',
-    'version': '16.0.1.0.0',
+    'version': '16.0.1.0.1',
     'category': 'Accounting/Localizations',
     'summary': 'Gerenciamento de consentimentos Open Finance',
     'description': """
@@ -8,7 +8,7 @@ Gerencia consentimentos para integração Open Finance.
 Suporte a pessoa física (PF) e jurídica (PJ), autorização via QR Code e renovação de tokens.
     """,
     'author': 'MadooIT',
-    'website': 'https://www.madooit.com.br',
+    'website': 'https://www.madooit.com',
     'depends': [
         'l10n_br_openfinance',
     ],

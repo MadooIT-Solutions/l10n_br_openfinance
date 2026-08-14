@@ -27,6 +27,7 @@
                     <button name="action_register_boleto" string="Registrar Boleto" type="object"
                         class="btn-primary"
                         attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <field name="boleto_pdf" invisible="1"/>
                     <button name="action_print_boleto" string="Imprimir Boleto" type="object"
                         class="btn-secondary"
                         attrs="{'invisible': [('boleto_pdf', '=', False)]}"/>

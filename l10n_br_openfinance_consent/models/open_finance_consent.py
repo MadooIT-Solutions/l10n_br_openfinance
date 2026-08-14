@@ -67,6 +67,11 @@ class OpenFinanceConsent(models.Model):
         string='CPF/CNPJ do Titular',
         help='CPF (PF) ou CNPJ (PJ) do titular da conta')
 
+    logged_user_cpf = fields.Char(
+        string='CPF do Usuário Logado',
+        help='CPF da pessoa natural que autoriza o consentimento (obrigatório '
+             'para consentimentos PJ, conforme o padrão FAPI do Open Finance)')
+
     qr_code = fields.Binary(
         string='QR Code', readonly=True,
         help='QR Code para autorização via app do banco')
@@ -123,7 +128,7 @@ class OpenFinanceConsent(models.Model):
                 'date_requested': fields.Datetime.now(),
                 'date_expiration': result.get('expiration_date'),
             })
-            if result.get('qr_code_text'):
+            if result.get('qr_code_text') or result.get('qr_code_url'):
                 self._generate_qr_code()
         except Exception as e:
             raise UserError(_('Erro ao solicitar consentimento: %s') % str(e))
@@ -133,8 +138,9 @@ class OpenFinanceConsent(models.Model):
         try:
             import qrcode
             from io import BytesIO
+            qr_data = self.qr_code_text or self.qr_code_url
             qr = qrcode.QRCode(version=1, box_size=10, border=4)
-            qr.add_data(self.qr_code_text)
+            qr.add_data(qr_data)
             qr.make(fit=True)
             img = qr.make_image(fill_color="black", back_color="white")
             buffer = BytesIO()
@@ -142,7 +148,7 @@ class OpenFinanceConsent(models.Model):
             self.qr_code = base64.b64encode(buffer.getvalue())
         except ImportError:
             self.qr_code = base64.b64encode(
-                self.qr_code_text.encode()
+                (self.qr_code_text or self.qr_code_url or '').encode()
             )
         except Exception:
             pass
